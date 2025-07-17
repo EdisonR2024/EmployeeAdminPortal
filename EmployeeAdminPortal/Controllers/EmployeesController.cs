@@ -27,9 +27,7 @@ namespace EmployeeAdminPortal.Controllers
 
         [HttpGet("{id}")]
         public ActionResult GetEmployeeById(Guid id)
-        {
-            //Console.WriteLine("Llamada el metodo GET por ID");//tmp
-
+        {           
             var employee = _dbContext.Employees.Find(id);
 
             if (employee is null) return NotFound("Empleado no encontrado");
@@ -42,7 +40,7 @@ namespace EmployeeAdminPortal.Controllers
         {
             var employeeEntity = new Employee()
             {
-                //Id = Guid.NewGuid(),
+                //Id = Guid.NewGuid(),//No es necesario, ya que EF Core lo genera automáticamente
                 Name = addEmployeeDto.FirstName + " " + addEmployeeDto.LastName,
                 Email = addEmployeeDto.Email,
                 Phone = addEmployeeDto.Phone,
@@ -54,7 +52,7 @@ namespace EmployeeAdminPortal.Controllers
             //return Ok("Se ha creado un nuevo empleado");
             //return Created();
             //return Ok(employeeEntity);
-            //Console.WriteLine("Id del empleado nuevo: " + employeeEntity.Id);
+            //Console.WriteLine("Id del empleado nuevo: " + employeeEntity.Id); // Para ver el Id generado por EF Core
             return CreatedAtAction(nameof(GetEmployeeById), new { id = employeeEntity.Id }, employeeEntity);
         }
 
